@@ -1,5 +1,3 @@
-// models/patientModel.js
-
 let patients = [
     {
       id: 1,
