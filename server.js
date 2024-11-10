@@ -10,7 +10,7 @@ const port = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use('/api', patientRoutes);
+app.use('/', patientRoutes);
 
 app.listen(port, () => {
   console.log(`Server running at https://localhost:${port}`);
