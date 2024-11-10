@@ -1,4 +1,3 @@
-// config/server.js
 const express = require('express');
 const patientRoutes = require('./routes/patientRoutes');
 const cors = require('cors');

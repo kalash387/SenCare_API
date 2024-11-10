@@ -33,7 +33,11 @@ const createPatient = (req, res) => {
 // Get critical patients
 const getCriticalPatientsList = (req, res) => {
   const criticalPatients = getCriticalPatients();
-  responseHelper.sendSuccess(res, 200, criticalPatients);
+  if (criticalPatients && criticalPatients.length > 0) {
+    responseHelper.sendSuccess(res, 200, criticalPatients);
+  } else {
+    responseHelper.sendError(res, 404, 'No critical patients found');
+  }
 };
 
 module.exports = { getPatients, getPatient, createPatient, getCriticalPatientsList };

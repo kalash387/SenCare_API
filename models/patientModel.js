@@ -47,7 +47,8 @@ let patients = [
   
   // Get critical patients (based on condition or clinical data)
   const getCriticalPatients = () => {
-    return patients.filter((patient) => patient.condition === "Critical");
+    const criticalPatients = patients.filter((patient) => patient.condition === "Critical");
+    return criticalPatients;
   };
   
   module.exports = { getAllPatients, getPatientById, addPatient, addClinicalData, getCriticalPatients };
