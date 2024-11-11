@@ -16,13 +16,13 @@ const getClinicalData = (req, res) => {
 // Add clinical data to a patient
 const addClinicalDataForPatient = (req, res) => {
   const { id } = req.params;
-  const { date, type, value } = req.body;
+  const { date, type, value, condition } = req.body;
 
-  if (!date || !type || !value) {
+  if (!date || !type || !value || !condition) {
     return responseHelper.sendError(res, 400, 'Date, type, and value are required');
   }
 
-  const newClinicalData = { date, type, value };
+  const newClinicalData = { date, type, value, condition };
   const updatedPatient = addClinicalData(Number(id), newClinicalData);
 
   if (updatedPatient) {
