@@ -29,6 +29,9 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
+const connectDB = require('./db');
+connectDB();
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use(cors());

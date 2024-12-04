@@ -1,11 +1,17 @@
 // controllers/clinicalDataController.js
 const { addClinicalData, getPatientById } = require('../models/patientModel');
 const responseHelper = require('../utils/responseHelper');
+const mongoose = require('mongoose');
 
 // Get clinical data for a patient
-const getClinicalData = (req, res) => {
+const getClinicalData = async (req, res) => {
   const { id } = req.params;
-  const patient = getPatientById(Number(id));
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return responseHelper.sendError(res, 400, 'Invalid ID format');
+  }
+
+  const patient = await getPatientById(id);
   if (patient) {
     responseHelper.sendSuccess(res, 200, patient.clinicalData);
   } else {
@@ -14,21 +20,29 @@ const getClinicalData = (req, res) => {
 };
 
 // Add clinical data to a patient
-const addClinicalDataForPatient = (req, res) => {
+const addClinicalDataForPatient = async (req, res) => {
   const { id } = req.params;
   const { date, type, value, condition } = req.body;
 
   if (!date || !type || !value || !condition) {
-    return responseHelper.sendError(res, 400, 'Date, type, and value are required');
+    return responseHelper.sendError(res, 400, 'Date, type, value, and condition are required');
   }
 
-  const newClinicalData = { date, type, value, condition };
-  const updatedPatient = addClinicalData(Number(id), newClinicalData);
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return responseHelper.sendError(res, 400, 'Invalid ID format');
+  }
 
-  if (updatedPatient) {
-    responseHelper.sendSuccess(res, 200, updatedPatient);
-  } else {
-    responseHelper.sendError(res, 404, 'Patient not found');
+  try {
+    const newClinicalData = { date, type, value, condition };
+    const updatedPatient = await addClinicalData(id, newClinicalData);
+
+    if (updatedPatient) {
+      responseHelper.sendSuccess(res, 200, newClinicalData); // Return only the new data
+    } else {
+      responseHelper.sendError(res, 404, 'Patient not found');
+    }
+  } catch (error) {
+    responseHelper.sendError(res, 500, 'Error adding clinical data');
   }
 };
 

@@ -1,70 +1,62 @@
-const { connect } = require("../routes/patientRoutes");
-const path = require("path");
-
-let patients = [
-  {
-    id: 1,
-    name: "John Doe",
-    condition: "Normal",
-    contact: "123-456-7890",
-    age: 45,
-    photo: "/assets/patient1.png",
-    clinicalData: [
-      { date: "2024-11-01T10:00:00Z", type: "Blood Pressure", value: "120/80", condition: "Normal" }
-    ]
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    condition: "Critical",
-    contact: "987-654-3210",
-    age: 30,
-    photo: "/assets/patient1.png",
-    clinicalData: [
-      { date: "2024-11-01T09:00:00Z", type: "Blood Pressure", value: "160/100", condition: "Critical" }
-    ]
-  },
-  {
-    id: 3,
-    name: "Sam Johnson",
-    condition: "Critical",
-    contact: "987-654-3213",
-    age: 30,
-    photo: "/assets/patient1.png",
-    clinicalData: [
-      { date: "2024-11-01T09:00:00Z", type: "Blood Pressure", value: "190/100", condition: "Critical" }
-    ]
-  }
-];
+const Patient = require('./Patient'); // Correct relative path for models in the same folder
 
 // Fetch all patients
-const getAllPatients = () => patients;
+const getAllPatients = async () => {
+  try {
+    return await Patient.find();
+  } catch (error) {
+    throw new Error("Error fetching all patients");
+  }
+};
 
 // Fetch patient by ID
-const getPatientById = (id) => patients.find((patient) => patient.id === id);
+const getPatientById = async (id) => {
+  try {
+    return await Patient.findById(id);
+  } catch (error) {
+    throw new Error("Error fetching patient by ID");
+  }
+};
 
 // Add a new patient
-const addPatient = (newPatient) => {
-  const patientId = patients.length + 1;
-  const patient = { id: patientId, ...newPatient, clinicalData: [] };
-  patients.push(patient);
-  return patient;
+const addPatient = async (newPatient) => {
+  try {
+    console.log('Patient Model:', Patient);
+    const patient = new Patient(newPatient);
+    return await patient.save();
+  } catch (error) {
+    console.error('Error adding patient:', error.message);
+    throw new Error('Failed to add patient');
+  }
 };
 
 // Add clinical data for a patient
-const addClinicalData = (patientId, data) => {
-  const patient = getPatientById(patientId);
-  if (patient) {
-    patient.clinicalData.push(data);
-    return patient;
+const addClinicalData = async (patientId, data) => {
+  try {
+    const patient = await Patient.findById(patientId);
+    if (patient) {
+      patient.clinicalData.push(data);
+      return await patient.save();
+    }
+    return null;
+  } catch (error) {
+    throw new Error("Error adding clinical data to patient");
   }
-  return null;
 };
 
 // Get critical patients (based on condition or clinical data)
-const getCriticalPatients = () => {
-  const criticalPatients = patients.filter((patient) => patient.condition === "Critical");
-  return criticalPatients;
+const getCriticalPatients = async () => {
+  try {
+    return await Patient.find({ condition: "Critical" });
+  } catch (error) {
+    throw new Error("Error fetching critical patients");
+  }
 };
 
-module.exports = { getAllPatients, getPatientById, addPatient, addClinicalData, getCriticalPatients };
+module.exports = { 
+  getAllPatients, 
+  getPatientById, 
+  addPatient, 
+  addClinicalData, 
+  getCriticalPatients 
+};
