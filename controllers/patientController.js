@@ -3,9 +3,11 @@ const {
   getPatientById, 
   addPatient, 
   getCriticalPatients,
-  updatePatientById
+  updatePatientById,
+  deletePatientById
 } = require('../models/patientModel');
 const responseHelper = require('../utils/responseHelper');
+
 
 // Retrieve all patients
 const getPatients = async (req, res) => {
@@ -78,21 +80,22 @@ const updatePatient = async (req, res) => {
   }
 };
 
- // Delete a patient by ID
+
+// Delete a patient by ID
 const deletePatient = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const patient = await Patient.findByIdAndDelete(id); // Find and delete the patient
+    const deletedPatient = await deletePatientById(id);  // Using the model's delete function
 
-    if (!patient) {
-      return res.status(404).json({ message: 'Patient not found' });
+    if (!deletedPatient) {
+      return responseHelper.sendError(res, 404, 'Patient not found');
     }
 
-    return res.status(200).json({ message: 'Patient deleted successfully' });
+    return responseHelper.sendSuccess(res, 200, { message: 'Patient deleted successfully' });
   } catch (error) {
     console.error('Error deleting patient:', error.message);
-    return res.status(500).json({ message: 'Internal server error' });
+    return responseHelper.sendError(res, 500, 'Internal server error');
   }
 };
 

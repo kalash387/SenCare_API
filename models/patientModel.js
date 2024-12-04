@@ -41,6 +41,16 @@ const updatePatientById = async (id, updatedData) => {
   }
 };
 
+// Add the deletePatientById function
+const deletePatientById = async (id) => {
+  try {
+    const patient = await Patient.findByIdAndDelete(id);
+    return patient;
+  } catch (error) {
+    throw new Error('Error deleting patient: ' + error.message);
+  }
+};
+
 // Add clinical data for a patient
 const addClinicalData = async (patientId, data) => {
   try {
@@ -69,6 +79,7 @@ module.exports = {
   getPatientById, 
   addPatient, 
   updatePatientById,
+  deletePatientById,
   addClinicalData, 
   getCriticalPatients 
 };
