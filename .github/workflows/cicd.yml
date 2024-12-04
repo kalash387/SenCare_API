@@ -28,6 +28,6 @@ jobs:
     - name: Deploy to Azure Web App Service
       uses: azure/webapps-deploy@v2
       with:
-        app-name: testDeploymentApp1
+        app-name: SenCare
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: .
