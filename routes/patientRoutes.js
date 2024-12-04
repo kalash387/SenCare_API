@@ -191,6 +191,29 @@ router.put('/patients/:id', patientController.updatePatient);
 
 /**
  * @swagger
+ * /patients/{id}:
+ *   delete:
+ *     summary: Delete a patient by ID
+ *     tags: [Patients]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Patient ID
+ *     responses:
+ *       200:
+ *         description: Patient deleted successfully
+ *       404:
+ *         description: Patient not found
+ *       500:
+ *         description: Internal server error
+ */
+router.delete('/patients/:id', patientController.deletePatient);
+
+/**
+ * @swagger
  * /patients/{id}/clinical-data:
  *   get:
  *     summary: Retrieve clinical data for a specific patient

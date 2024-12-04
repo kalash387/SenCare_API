@@ -78,6 +78,24 @@ const updatePatient = async (req, res) => {
   }
 };
 
+ // Delete a patient by ID
+const deletePatient = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const patient = await Patient.findByIdAndDelete(id); // Find and delete the patient
+
+    if (!patient) {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
+
+    return res.status(200).json({ message: 'Patient deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting patient:', error.message);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 
 // Retrieve critical patients
 const getCriticalPatientsList = async (req, res) => {
@@ -98,5 +116,6 @@ module.exports = {
   getPatient, 
   createPatient, 
   updatePatient,
+  deletePatient,
   getCriticalPatientsList 
 };
