@@ -2,7 +2,8 @@ const {
   getAllPatients, 
   getPatientById, 
   addPatient, 
-  getCriticalPatients 
+  getCriticalPatients,
+  updatePatientById
 } = require('../models/patientModel');
 const responseHelper = require('../utils/responseHelper');
 
@@ -51,6 +52,32 @@ const createPatient = async (req, res) => {
   }
 };
 
+// Update patient information by ID
+const updatePatient = async (req, res) => {
+  const { id } = req.params;
+  const { name, condition, contact, age } = req.body;
+  console.log(req.body)
+  console.log(id)
+  // Validate input fields
+  if (!name || !condition || !contact || !age) {
+    return responseHelper.sendError(res, 400, 'All fields are required.');
+  }
+
+  try {
+    // Attempt to update the patient using the model function
+    const updatedPatient = await updatePatientById(id, { name, condition, contact, age });
+
+    if (updatedPatient) {
+      responseHelper.sendSuccess(res, 200, updatedPatient);
+    } else {
+      responseHelper.sendError(res, 404, 'Patient not found');
+    }
+  } catch (error) {
+    console.error('Error in updatePatient:', error.message);
+    responseHelper.sendError(res, 500, 'Failed to update patient');
+  }
+};
+
 
 // Retrieve critical patients
 const getCriticalPatientsList = async (req, res) => {
@@ -70,5 +97,6 @@ module.exports = {
   getPatients, 
   getPatient, 
   createPatient, 
+  updatePatient,
   getCriticalPatientsList 
 };

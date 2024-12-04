@@ -30,6 +30,17 @@ const addPatient = async (newPatient) => {
   }
 };
 
+// Update patient information by ID
+const updatePatientById = async (id, updatedData) => {
+  try {
+    // Find the patient by ID and update the provided fields
+    const updatedPatient = await Patient.findByIdAndUpdate(id, updatedData, { new: true });
+    return updatedPatient;
+  } catch (error) {
+    throw new Error('Error updating patient by ID');
+  }
+};
+
 // Add clinical data for a patient
 const addClinicalData = async (patientId, data) => {
   try {
@@ -57,6 +68,7 @@ module.exports = {
   getAllPatients, 
   getPatientById, 
   addPatient, 
+  updatePatientById,
   addClinicalData, 
   getCriticalPatients 
 };

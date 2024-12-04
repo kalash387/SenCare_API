@@ -129,6 +129,66 @@ router.get('/patients/:id', patientController.getPatient);
  */
 router.post('/patients', patientController.createPatient);
 
+
+/**
+ * @swagger
+ * /patients/{id}:
+ *   put:
+ *     summary: Update a patient's information
+ *     tags: [Patients]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Patient ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               condition:
+ *                 type: string
+ *               contact:
+ *                 type: string
+ *               age:
+ *                 type: integer
+ *               photo:
+ *                 type: string
+ *               clinicalData:
+ *                 type: object
+ *     responses:
+ *       200:
+ *         description: Patient updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 name:
+ *                   type: string
+ *                 condition:
+ *                   type: string
+ *                 contact:
+ *                   type: string
+ *                 age:
+ *                   type: integer
+ *       400:
+ *         description: Missing required fields
+ *       404:
+ *         description: Patient not found
+ *       500:
+ *         description: Internal server error
+ */
+router.put('/patients/:id', patientController.updatePatient);
+
 /**
  * @swagger
  * /patients/{id}/clinical-data:
