@@ -27,7 +27,7 @@ const router = express.Router();
  *                 type: object
  *                 properties:
  *                   id:
- *                     type: integer
+ *                     type: string
  *                   name:
  *                     type: string
  *                   condition:
@@ -56,7 +56,7 @@ router.get('/patients', patientController.getPatients);
  *                 type: object
  *                 properties:
  *                   id:
- *                     type: integer
+ *                     type: string
  *                   name:
  *                     type: string
  *                   condition:
@@ -74,7 +74,7 @@ router.get('/patients/critical', patientController.getCriticalPatientsList);
  *       - in: path
  *         name: id
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *         description: Patient ID
  *     responses:
@@ -86,7 +86,7 @@ router.get('/patients/critical', patientController.getCriticalPatientsList);
  *               type: object
  *               properties:
  *                 id:
- *                   type: integer
+ *                   type: string
  *                 name:
  *                   type: string
  *                 condition:
@@ -140,7 +140,7 @@ router.post('/patients', patientController.createPatient);
  *       - in: path
  *         name: id
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *         description: Patient ID
  *     requestBody:
@@ -171,7 +171,7 @@ router.post('/patients', patientController.createPatient);
  *               type: object
  *               properties:
  *                 id:
- *                   type: integer
+ *                   type: string
  *                 name:
  *                   type: string
  *                 condition:
@@ -199,7 +199,7 @@ router.put('/patients/:id', patientController.updatePatient);
  *       - in: path
  *         name: id
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *         description: Patient ID
  *     responses:
@@ -222,7 +222,7 @@ router.delete('/patients/:id', patientController.deletePatient);
  *       - in: path
  *         name: id
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *         description: Patient ID
  *     responses:
@@ -259,7 +259,7 @@ router.get('/patients/:id/clinical-data', clinicalDataController.getClinicalData
  *       - in: path
  *         name: id
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *         description: Patient ID
  *     requestBody:
