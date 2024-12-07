@@ -1,4 +1,4 @@
-const Patient = require('./Patient'); // Correct relative path for models in the same folder
+const Patient = require('./Patient');
 
 // Fetch all patients
 const getAllPatients = async () => {

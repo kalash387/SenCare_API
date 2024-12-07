@@ -76,7 +76,7 @@ const updatePatient = async (req, res) => {
     }
   } catch (error) {
     console.error('Error in updatePatient:', error.message);
-    responseHelper.sendError(res, 500, 'Failed to update patient. Error - ' + error.message);
+    responseHelper.sendError(res, 500, 'Failed to update patient');
   }
 };
 
