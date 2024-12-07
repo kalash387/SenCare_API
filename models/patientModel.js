@@ -21,7 +21,6 @@ const getPatientById = async (id) => {
 // Add a new patient
 const addPatient = async (newPatient) => {
   try {
-    console.log('Patient Model:', Patient);
     const patient = new Patient(newPatient);
     return await patient.save();
   } catch (error) {

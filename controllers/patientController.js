@@ -12,7 +12,6 @@ const responseHelper = require('../utils/responseHelper');
 // Retrieve all patients
 const getPatients = async (req, res) => {
   try {
-    console.log("Getting pateints")
     const patients = await getAllPatients();
     responseHelper.sendSuccess(res, 200, patients);
   } catch (error) {
@@ -58,8 +57,7 @@ const createPatient = async (req, res) => {
 const updatePatient = async (req, res) => {
   const { id } = req.params;
   const { name, condition, contact, age } = req.body;
-  console.log(req.body)
-  console.log(id)
+
   // Validate input fields
   if (!name || !condition || !contact || !age) {
     return responseHelper.sendError(res, 400, 'All fields are required.');
