@@ -73,6 +73,15 @@ const getCriticalPatients = async () => {
   }
 };
 
+// Update clinical data for a patient
+const updatePatientClinicalData = async (patientId, updatedClinicalData) => {
+  return await Patient.findByIdAndUpdate(
+    patientId,
+    { clinicalData: updatedClinicalData },
+    { new: true } // Return the updated document
+  );
+};
+
 module.exports = { 
   getAllPatients, 
   getPatientById, 
@@ -80,5 +89,6 @@ module.exports = {
   updatePatientById,
   deletePatientById,
   addClinicalData, 
-  getCriticalPatients 
+  getCriticalPatients,
+  updatePatientClinicalData
 };

@@ -288,4 +288,77 @@ router.get('/patients/:id/clinical-data', clinicalDataController.getClinicalData
  */
 router.post('/patients/:id/clinical-data', clinicalDataController.addClinicalDataForPatient);
 
+/**
+ * @swagger
+ * /patients/{id}/clinical-data/{clinicalDataId}:
+ *   put:
+ *     summary: Update specific clinical data for a specific patient
+ *     tags: [Patients]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Patient ID
+ *       - in: path
+ *         name: clinicalDataId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Clinical Data ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               date:
+ *                 type: string
+ *               type:
+ *                 type: string
+ *               value:
+ *                 type: number
+ *               condition:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Clinical data updated successfully
+ *       404:
+ *         description: Patient or clinical data not found
+ *       500:
+ *         description: Internal server error
+ */
+router.put('/patients/:id/clinical-data/:clinicalDataId', clinicalDataController.updateClinicalDataForPatient);
+
+/**
+ * @swagger
+ * /patients/{id}/clinical-data/{dataId}:
+ *   delete:
+ *     summary: Delete specific clinical data of a patient
+ *     tags: [Patients]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Patient ID
+ *       - in: path
+ *         name: dataId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Clinical Data ID
+ *     responses:
+ *       200:
+ *         description: Clinical data deleted successfully
+ *       404:
+ *         description: Patient or Clinical data not found
+ *       500:
+ *         description: Internal server error
+ */
+router.delete('/patients/:id/clinical-data/:clinicalDataId', clinicalDataController.deleteClinicalDataForPatient);
+
 module.exports = router;
